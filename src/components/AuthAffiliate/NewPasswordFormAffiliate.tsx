@@ -1,15 +1,15 @@
 import { useForm } from "react-hook-form"
 import ErrorMessage from "../ErrorMessage"
-import { AdminConfirmToken, NewPasswordForm as NewPswdForm } from "../../types"
+import { AffiliateConfirmToken, NewPasswordForm as NewPswdForm } from "../../types"
 import { useMutation } from "@tanstack/react-query"
 import { toast } from "react-toastify"
-import { updatePasswordWithToken } from "../../api/AuthAdminAPI"
-import { Link,useNavigate } from "react-router-dom"
+import { updatePasswordWithToken } from "../../api/AuthAffiliateAPI"
+import { Link, useNavigate } from "react-router-dom"
 
 type NewPasswordFormProps = {
-    token: AdminConfirmToken['token']
+    token: AffiliateConfirmToken['token']
 }
-export default function NewPasswordForm({token}:NewPasswordFormProps) {
+export default function NewPasswordFormAffiliate({token}:NewPasswordFormProps) {
 
     const navigate = useNavigate()
 
@@ -24,7 +24,7 @@ export default function NewPasswordForm({token}:NewPasswordFormProps) {
         onError: (error)=> toast.error(error.message),
         onSuccess:(data)=>{
             toast.success(data)
-            navigate('/auth/admin/login')
+            navigate('/auth/affiliate/login')
         }
     })
     const handleNewPassword =(formData:NewPswdForm)=>{
@@ -93,7 +93,7 @@ export default function NewPasswordForm({token}:NewPasswordFormProps) {
             </form>
             <nav className="mb-4 flex flex-col space-y-4 w-fit mx-auto">
                 <Link
-                    to='/auth/admin/request-code'
+                    to='/auth/affiliate/forgot-password'
                     className="text-center text-gray-500 font-normal"
                 >
                     Request a new code

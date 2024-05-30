@@ -1,34 +1,38 @@
-import { useForm } from "react-hook-form"
-import ErrorMessage from "../../components/ErrorMessage"
-import { Link } from "react-router-dom"
-import { AdminRegistrationForm } from "../../types"
-import { useMutation } from "@tanstack/react-query"
-import { createAccount } from "../../api/AuthAdminAPI"
-import { toast } from "react-toastify"
+import { Link, useNavigate } from "react-router-dom";
+import ErrorMessage from "../../components/ErrorMessage";
+import { useForm } from "react-hook-form";
+import { AffiliateRegistrationForm } from "../../types";
+import { useMutation } from "@tanstack/react-query";
+import { createAccount } from "../../api/AuthAffiliateAPI";
+import { toast } from "react-toastify";
 
-export default function RegisterAdminView() {
+export default function RegisterAffiliateView() {
 
-    const initialValues: AdminRegistrationForm = {
-        name: '',
-        position: '',
+    const initialValues : AffiliateRegistrationForm = {
+        dni: '',
+        firstName: '',
+        lastName: '',
+        birthdate: '',
         email: '',
         password: '',
         password_confirmation: '',
     }
 
-    const {register,handleSubmit,formState:{errors}, watch,reset} = useForm<AdminRegistrationForm>({defaultValues: initialValues})
+    const {handleSubmit,register,formState:{errors},watch} = useForm<AffiliateRegistrationForm>({defaultValues:initialValues})
 
+    const navigate = useNavigate()
     const {mutate} = useMutation({
-        mutationFn: createAccount,
-        onError: (error)=> toast.error(error.message),
+        mutationFn:createAccount,
+        onError:(error)=>toast.error(error.message),
         onSuccess:(data)=>{
             toast.success(data)
-            reset()
+            navigate('/auth/affiliate/confirm-account')
         }
     })
+
     const password = watch('password')
 
-    const handleRegister =(formData: AdminRegistrationForm)=>mutate(formData)
+    const handleRegister = (formData:AffiliateRegistrationForm)=>mutate(formData)
 
     return (
         <>
@@ -45,36 +49,71 @@ export default function RegisterAdminView() {
                 <div className="flex flex-col gap-1">
                     <label
                         className="font-semibold text-md"
-                    >Name:</label>
+                    >DNI:</label>
 
                     <input
                         type="text"
-                        placeholder="Registration name"
+                        placeholder="Registration DNI"
                         className="w-full p-2  border-gray-300 border rounded-md focus:border-gray-500 focus:outline-none"
-                        {...register("name", {
-                            required: "Name required",
+                        {...register("dni", {
+                            required: "DNI required",
                         })}
                     />
-                    {errors.name && (
-                        <ErrorMessage>{errors.name.message}</ErrorMessage>
+                    {errors.dni && (
+                        <ErrorMessage>{errors.dni.message}</ErrorMessage>
                     )}
                 </div>
 
                 <div className="flex flex-col gap-1">
                     <label
                         className="font-semibold text-md"
-                    >Position:</label>
+                    >First Name:</label>
 
                     <input
                         type="text"
-                        placeholder="Registration position"
+                        placeholder="Registration First Name"
                         className="w-full p-2  border-gray-300 border rounded-md focus:border-gray-500 focus:outline-none"
-                        {...register("position", {
-                            required: "Position required",
+                        {...register("firstName", {
+                            required: "First Name required",
                         })}
                     />
-                    {errors.position && (
-                        <ErrorMessage>{errors.position.message}</ErrorMessage>
+                    {errors.firstName && (
+                        <ErrorMessage>{errors.firstName.message}</ErrorMessage>
+                    )}
+                </div>
+
+                <div className="flex flex-col gap-1">
+                    <label
+                        className="font-semibold text-md"
+                    >Last Name:</label>
+
+                    <input
+                        type="text"
+                        placeholder="Registration Last Name"
+                        className="w-full p-2  border-gray-300 border rounded-md focus:border-gray-500 focus:outline-none"
+                        {...register("lastName", {
+                            required: "Last Name required",
+                        })}
+                    />
+                    {errors.lastName && (
+                        <ErrorMessage>{errors.lastName.message}</ErrorMessage>
+                    )}
+                </div>
+
+                <div className="flex flex-col gap-1">
+                    <label
+                        className="font-semibold text-md"
+                    >Birthdate:</label>
+
+                    <input
+                        type="date"
+                        className="w-full p-2  border-gray-300 border rounded-md focus:border-gray-500 focus:outline-none"
+                        {...register("birthdate", {
+                            required: "Birthdate required",
+                        })}
+                    />
+                    {errors.birthdate && (
+                        <ErrorMessage>{errors.birthdate.message}</ErrorMessage>
                     )}
                 </div>
 
@@ -151,13 +190,13 @@ export default function RegisterAdminView() {
             </form>
             <nav className="flex flex-col space-y-4 mb-4 w-fit mx-auto">
                 <Link
-                    to={'/auth/admin/login'}
+                    to={'/auth/affiliate/login'}
                     className="text-center text-sm text-gray-500 font-normal"
                 >
                     Do you already have an account? Sign In
                 </Link>
                 <Link
-                    to={'/auth/admin/forgot-password'}
+                    to={'/auth/affiliate/forgot-password'}
                     className="text-center text-sm text-gray-500 font-normal"
                 >
                     Forgot Password?

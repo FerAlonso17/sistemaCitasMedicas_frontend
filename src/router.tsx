@@ -9,6 +9,12 @@ import NewPasswordView from "./views/authAdmin/NewPasswordView";
 import LoginAffiliateView from "./views/authAffiliate/LoginAffiliateView";
 import AppAffiliateLayout from "./layouts/AppAffiliateLayout";
 import DashboardAffiliateView from "./views/AppointmentAffiliate/DashboardAffiliateView";
+import AuthAffiliateLayout from "./layouts/AuthAffiliateLayout";
+import RegisterAffiliateView from "./views/authAffiliate/RegisterAffiliateView";
+import ConfirmAccountAffiliateView from "./views/authAffiliate/ConfirmAccountAffiliateView";
+import RequestNewCodeAffiliateView from "./views/authAffiliate/RequestNewCodeAffiliateView";
+import ForgotPasswordAffiliateView from "./views/authAffiliate/ForgotPasswordAffiliateView";
+import NewPasswordAffiliateView from "./views/authAffiliate/NewPasswordAffiliateView";
 
 export default function Router() {
     return (
@@ -23,7 +29,14 @@ export default function Router() {
                     <Route path="/auth/admin/new-password" element={<NewPasswordView/>}/>
                 </Route>
 
-                <Route path='/auth/affiliate/login' element={<LoginAffiliateView/>}/>
+                <Route element={<AuthAffiliateLayout/>}>
+                    <Route path='/auth/affiliate/login' element={<LoginAffiliateView/>}/>
+                    <Route path="/auth/affiliate/register" element={<RegisterAffiliateView/>}/>
+                    <Route path="/auth/affiliate/confirm-account" element={<ConfirmAccountAffiliateView/>}/>
+                    <Route path="/auth/affiliate/request-code" element={<RequestNewCodeAffiliateView/>}/>
+                    <Route path="/auth/affiliate/forgot-password" element={<ForgotPasswordAffiliateView/>}/>
+                    <Route path="/auth/affiliate/new-password" element={<NewPasswordAffiliateView/>}/>
+                </Route>
 
                 <Route element={<AppAffiliateLayout/>}>
                     <Route path="/" element={<DashboardAffiliateView/>} index/>

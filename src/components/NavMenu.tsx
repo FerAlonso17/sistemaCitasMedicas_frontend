@@ -1,19 +1,20 @@
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react/jsx-runtime";
-import { AuthAffiliate } from "../types";
+import { Affiliate } from "../types";
 import { useQueryClient } from "@tanstack/react-query";
 
 type NavMenuProps={
-    name: AuthAffiliate['name']
+    firstName: Affiliate['firstName']
+    lastName: Affiliate['lastName']
 }
 
-export default function NavMenu({name}:NavMenuProps) {
+export default function NavMenu({firstName,lastName}:NavMenuProps) {
 
     const queryClient = useQueryClient()
     const logout =()=>{
-        localStorage.removeItem('AUTH_TOKEN')
         queryClient.invalidateQueries({queryKey:['affiliate']})
+        localStorage.removeItem('AUTH_TOKEN')
     }
 
     return (
@@ -23,7 +24,7 @@ export default function NavMenu({name}:NavMenuProps) {
                 group inline-flex text-white items-center rounded-md bg-transparent px-3 py-2 text-base font-medium hover:text-blue-200 focus:outline-none lg:mr-5`}
             >
                 <div className="flex flex-col items-end border-l-2 pl-6 gap-1">
-                    <h3 className="font-semibold">Hello, {' '}<span className="font-extrabold">{name}</span></h3>
+                    <h3 className="font-semibold">Hello, {' '}<span className="font-extrabold">{firstName+' '+lastName}</span></h3>
                     <p className="text-sm font-medium">Affiliate</p>
                 </div>
                 <ChevronDownIcon
