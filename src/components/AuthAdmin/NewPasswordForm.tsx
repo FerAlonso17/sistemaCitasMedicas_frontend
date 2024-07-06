@@ -4,7 +4,7 @@ import { AdminConfirmToken, NewPasswordForm as NewPswdForm } from "../../types"
 import { useMutation } from "@tanstack/react-query"
 import { toast } from "react-toastify"
 import { updatePasswordWithToken } from "../../api/AuthAdminAPI"
-import { Link,useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 type NewPasswordFormProps = {
     token: AdminConfirmToken['token']
@@ -91,14 +91,6 @@ export default function NewPasswordForm({token}:NewPasswordFormProps) {
                     className="bg-blue-600 hover:bg-blue-700 rounded-md w-full p-2 text-white font-black  text-md cursor-pointer"
                 />
             </form>
-            <nav className="mb-4 flex flex-col space-y-4 w-fit mx-auto">
-                <Link
-                    to='/auth/admin/request-code'
-                    className="text-center text-gray-500 font-normal"
-                >
-                    Request a new code
-                </Link>
-            </nav>
         </>
     )
 }

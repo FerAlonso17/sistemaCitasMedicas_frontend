@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import ErrorMessage from "../../components/ErrorMessage"
 import { useMutation } from "@tanstack/react-query"
 import { login } from "../../api/AuthAdminAPI"
@@ -14,11 +14,13 @@ export default function LoginAdminView() {
     }
     const {register,formState:{errors},handleSubmit} = useForm<AuthenticateAdminForm>({defaultValues: initialValues})
 
+    const navigate = useNavigate()
     const {mutate} = useMutation({
         mutationFn: login,
         onError:(error)=>toast.error(error.message),
         onSuccess:()=>{
-            toast.success('Iniciando sesión')
+            // toast.success('Iniciando sesión')
+            navigate('/records')
         }
     })
     const handleLogin =(formData:AuthenticateAdminForm)=>mutate(formData)

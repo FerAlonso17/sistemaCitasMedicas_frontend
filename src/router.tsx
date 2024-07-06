@@ -15,6 +15,9 @@ import ConfirmAccountAffiliateView from "./views/authAffiliate/ConfirmAccountAff
 import RequestNewCodeAffiliateView from "./views/authAffiliate/RequestNewCodeAffiliateView";
 import ForgotPasswordAffiliateView from "./views/authAffiliate/ForgotPasswordAffiliateView";
 import NewPasswordAffiliateView from "./views/authAffiliate/NewPasswordAffiliateView";
+import AppAdminLayout from "./layouts/AppAdminLayout";
+import DashboardAdminView from "./views/RecordsAdmin/DashboardAdminView";
+import DoctorsView from "./views/RecordsAdmin/DoctorsView";
 
 export default function Router() {
     return (
@@ -40,6 +43,11 @@ export default function Router() {
 
                 <Route element={<AppAffiliateLayout/>}>
                     <Route path="/" element={<DashboardAffiliateView/>} index/>
+                </Route>
+
+                <Route element={<AppAdminLayout/>}>
+                    <Route path="/records" element={<DashboardAdminView/>} index/>
+                    <Route path="/doctors" element={<DoctorsView/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>

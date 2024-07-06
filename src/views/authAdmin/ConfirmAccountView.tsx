@@ -16,8 +16,8 @@ export default function ConfirmAccountView() {
         mutationFn: confirmAccount,
         onError:(error)=> toast.error(error.message),
         onSuccess:()=>{
-            toast.success('Iniciando sesion...')
-            //navigate('/')
+            // toast.success('Iniciando sesion...')
+            navigate('/records')
         }
     })
 
