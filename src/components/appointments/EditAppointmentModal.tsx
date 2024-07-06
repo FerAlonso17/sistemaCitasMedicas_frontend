@@ -1,10 +1,10 @@
 import { Dialog, Transition } from "@headlessui/react"
 import { Fragment } from "react/jsx-runtime"
 import AppointmentForm from "./AppointmentForm"
-import { Navigate, useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { editAppointment, getAppointmentById } from "../../api/AppointmentAffiliateApi"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { editAppointment } from "../../api/AppointmentAffiliateApi"
 import { toast } from "react-toastify"
 import { Appointment, AppointmentFormData } from "../../types"
 
