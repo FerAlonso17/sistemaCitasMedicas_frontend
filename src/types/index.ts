@@ -23,7 +23,7 @@ export type AuthenticateAdminForm = Pick<AuthAdmin, 'email' | 'password'>
 /** ADMIN */
 export const adminSchema = authAdminSchema.pick({
     name: true,
-    email:true
+    email: true
 }).extend({
     _id: z.string()
 })
@@ -43,7 +43,7 @@ const authAffiliateSchema = z.object({
 })
 
 type AuthAffiliate = z.infer<typeof authAffiliateSchema>
-export type AffiliateRegistrationForm = Pick<AuthAffiliate,'dni' | 'firstName' | 'lastName' | 'email' |'birthdate' | 'password' | 'password_confirmation'>
+export type AffiliateRegistrationForm = Pick<AuthAffiliate, 'dni' | 'firstName' | 'lastName' | 'email' | 'birthdate' | 'password' | 'password_confirmation'>
 export type AffiliateConfirmToken = Pick<AuthAffiliate, 'token'>
 export type RequestConfirmationCodeAffiliate = Pick<AuthAffiliate, 'email'>
 export type ForgotPasswordFormAffiliate = Pick<AuthAffiliate, 'email'>
@@ -52,9 +52,9 @@ export type AuthenticateAffiliateForm = Pick<AuthAffiliate, 'email' | 'password'
 
 /** AFFILIATE */
 export const affiliateSchema = authAffiliateSchema.pick({
-    firstName:true,
-    lastName:true,
-    email:true
+    firstName: true,
+    lastName: true,
+    email: true
 }).extend({
     _id: z.string()
 })
@@ -106,7 +106,7 @@ export const appointmentSchema = z.object({
     speciality: specialitySchema,
     dateAppointment: z.string(),
     state: stateSchema,
-    affiliate: z.string(affiliateSchema.pick({ _id: true })),
+    patient: z.string(affiliateSchema.pick({ _id: true })),
     hospital: hospitalSchema,
     orderAttention: z.number(),
 })
@@ -140,3 +140,36 @@ export const appointmentFormDataSchema = z.object({
 
 export type Appointment = z.infer<typeof appointmentSchema>
 export type AppointmentFormData = z.infer<typeof appointmentFormDataSchema>
+
+
+/**RECORDS */
+export const recordSchema = z.object({
+    _id: z.string(),
+    dateRecord: z.string(),
+    specialityRecord: z.array(
+        z.object({
+            specialityR: z.string(specialitySchema),
+            doctorRecord: z.array(
+                z.object({
+                    doctorR: doctorSchema.pick({
+                        _id: true,
+                        name: true,
+                        speciality:true
+                    }),
+                    numberAppointment: z.string(),
+                    appointmentsRecord: z.array(z.unknown()), // Placeholder for actual appointment schema
+                })
+            ),
+        })
+    ),
+});
+
+export const recordFormDataSchema = z.object({
+    dateRecord: z.string(),
+    specialityR: z.string(specialitySchema),
+    doctorR: z.string(doctorSchema.pick({ _id: true })),
+    numberAppointment: z.string()
+})
+
+export type Record = z.infer<typeof recordSchema>
+export type RecordFormData = z.infer<typeof recordFormDataSchema>
